@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     hp: {
       type: DataTypes.INTEGER,
@@ -36,6 +37,9 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    sprites: {
+      type: DataTypes.TEXT,
     },
   });
 };
