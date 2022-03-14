@@ -13,13 +13,24 @@ const getFromDb = async () => {
       },
     },
   });
-  return await pokemonsFromDb;
+
+  return pokemonsFromDb;
 };
 const allPokemonsMerge = async () => {
-  const pokemonsFromApi = await axios.get("https://pokeapi.co/api/v2/pokemon");
-  if (!pokemonsFromApi.data.results.length)
-    return new Error("Error retrieving data from API");
-  return [...pokemonsFromApi.data.results, ...(await getFromDb())];
+  const petition = (
+    await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10")
+  ).data.results;
+  if (!petition.length) return new Error("Error retrieving data from API");
+  const dataServer = await Promise.all(
+    petition.map(async (e) => (await axios.get(e.url)).data)
+  );
+  const pokemonsFromApi = dataServer.map((pokemon) => ({
+    id: pokemon.id,
+    name: pokemon.name,
+    types: pokemon.types.map((type) => type["type"]["name"]),
+    sprites: pokemon.sprites.other["official-artwork"].front_default,
+  }));
+  return [...pokemonsFromApi, ...(await getFromDb())];
 };
 
 const getAllPokemons = async (req, res, next) => {
@@ -51,7 +62,6 @@ const getAllPokemons = async (req, res, next) => {
     }
     const pokemons = await allPokemonsMerge();
     if (pokemons instanceof Error) throw pokemons;
-
     res.json(pokemons);
   } catch (error) {
     next(error);
@@ -87,7 +97,7 @@ const addPokemon = async (req, res, next) => {
       throw new Error("All parameters must be sent");
 
     const {name, hp, attack, defense, speed, height, weight, types, sprites} =
-      req.body;
+      req.body;   
 
     const newPokemon = await Pokemon.create({
       name,

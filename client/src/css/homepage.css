@@ -1,0 +1,64 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3rem;
+  width: 100%;
+  height: 100vh;
+  background-image: url("./animatedWall.gif");
+  background-color: #002651;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  padding: 1rem 0 1rem 1rem 0;
+}
+.image {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.image img {
+  width: 12rem;
+  height: 10rem;
+  animation: movement linear infinite 5s;
+}
+@keyframes movement {
+  0% {
+    transform: translateX(-20rem);
+  }
+  100% {
+    transform: translateX(700%);
+  }
+}
+.text {
+  width: 70%;
+  height: 100%;
+  padding: 0 2rem;
+  text-align: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 2rem;
+}
+.main .text h1 {
+  text-shadow: rgb(255, 187, 40) 5px 5px 0;
+  /*   font-family: “Lucida Sans Typewriter”, “Lucida Console”, Monaco,
+    “Bitstream Vera Sans Mono”, monospace; */
+}
+.main .text button {
+  background-color: transparent;
+  border: none;
+  border: 3px white solid;
+  padding: 1rem;
+  font-weight: 800;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  color: white;
+  text-shadow: rgb(255, 187, 40) 2px 2px 0;
+  box-shadow: rgb(255, 187, 40) 5px 5px 0;
+}
+.main .text button:hover {
+  transform: scale(0.95);
+}
