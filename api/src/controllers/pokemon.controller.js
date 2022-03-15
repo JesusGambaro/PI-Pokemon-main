@@ -4,25 +4,22 @@ const {conn} = require("../db");
 const DEFAULT_IMAGE =
   "https://th.bing.com/th/id/R.59dea9fdb6df1ba48c78f9f15313e18c?rik=eCryW%2b%2bKu6aVkA&riu=http%3a%2f%2f3.bp.blogspot.com%2f-41nAAVDLCf8%2fTdpa5in-1eI%2fAAAAAAAAACI%2f4QECNPqOt2s%2fs1600%2fWhos_that_pokemon_meme_by_CosmoJames.jpg&ehk=3R85PH9sY3XbnNTm6FYgBoV2guzcE5G2W3h4QdEkE18%3d&risl=&pid=ImgRaw&r=0";
 const getFromDb = async () => {
-  const pokemonsFromDb = await Pokemon.findAll({
-    include: {
-      model: Types,
-      attributes: ["type_name"],
-      through: {
-        attributes: [],
-      },
-    },
-  });
-
-  return pokemonsFromDb;
+  const dbData = await Pokemon.findAll({include: Types});
+  const pokemons = dbData.map((e) => ({
+    id: e.id,
+    name: e.name.substring(0, 1).toUpperCase() + e.name.substring(1),
+    types: e.types.map((t) => t.type_name.substring(0, 1).toUpperCase() + t.type_name.substring(1)),
+    sprites: e.sprites,
+  }));
+  return pokemons;
 };
 const allPokemonsMerge = async () => {
-  const petition = (
-    await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10")
-  ).data.results;
-  if (!petition.length) return new Error("Error retrieving data from API");
+  const {data} = await axios.get(
+    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40"
+  );
+  if (!data.results.length) return new Error("Error retrieving data from API");
   const dataServer = await Promise.all(
-    petition.map(async (e) => (await axios.get(e.url)).data)
+    data.results.map(async (e) => (await axios.get(e.url)).data)
   );
   const pokemonsFromApi = dataServer.map((pokemon) => ({
     id: pokemon.id,
@@ -30,7 +27,9 @@ const allPokemonsMerge = async () => {
     types: pokemon.types.map((type) => type["type"]["name"]),
     sprites: pokemon.sprites.other["official-artwork"].front_default,
   }));
-  return [...pokemonsFromApi, ...(await getFromDb())];
+
+  const pokemonsFromDb = await getFromDb();
+  return [...pokemonsFromApi, ...pokemonsFromDb];
 };
 
 const getAllPokemons = async (req, res, next) => {
@@ -97,7 +96,7 @@ const addPokemon = async (req, res, next) => {
       throw new Error("All parameters must be sent");
 
     const {name, hp, attack, defense, speed, height, weight, types, sprites} =
-      req.body;   
+      req.body;
 
     const newPokemon = await Pokemon.create({
       name,
