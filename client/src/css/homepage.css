@@ -29,7 +29,7 @@
     transform: translateX(-20rem);
   }
   100% {
-    transform: translateX(700%);
+    transform: translateX(800%);
   }
 }
 .text {

@@ -1,26 +1,18 @@
-import {useState, useEffect} from "react";
+//import {useState, useEffect} from "react";
 import "../css/pokemons.css";
-import PokemonCard from "./PokemonCard";
-import axios from "axios";
+import {useSelector, useDispatch} from "react-redux";
+import {initPokemons} from "../actions/initPokemons";
+import {useEffect} from "react";
+import Pagination from "./Pagination";
+
 const Pokemons = () => {
-  const array = [1, 2, 3, 3, 4, 5, 6];
-  const [pokemons, setPokemons] = useState([]);
+  const pokemons = useSelector((state) => state.pokemons);
+  //const loading = useSelector((state) => state.loading);
+  const dispatch = useDispatch();
   useEffect(() => {
-    (async () => {
-      await axios.get("http://localhost:3001/types");
-      const {data} = await axios.get("http://localhost:3001/pokemons");
-      if (data) {
-        setPokemons(() => data);
-      }
-    })();
+    dispatch(initPokemons());
   }, []);
-  return (
-    <div className="pokemons-container">
-      {pokemons.map((pokemon) => (
-        <PokemonCard key={pokemon.id} props={pokemon} />
-      ))}
-    </div>
-  );
+  return <Pagination data={pokemons} pageLimit={4} cardsPerPage={10} />;
 };
 
 export default Pokemons;

@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const {
   getAllPokemons,
-  getOneApiPokemonById,
+  getOnePokemonById,
   addPokemon,
   updatePokemon,
   delPokemon,
@@ -10,7 +10,7 @@ const {
 const router = Router();
 
 router.get("/", getAllPokemons);
-router.get("/:id", getOneApiPokemonById);
+router.get("/:id", getOnePokemonById);
 router.post("/", addPokemon);
 router.put("/edit/:id", updatePokemon);
 router.delete("/:id", delPokemon);

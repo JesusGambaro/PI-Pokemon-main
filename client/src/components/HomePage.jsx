@@ -1,6 +1,8 @@
 import "../css/homepage.css";
 import {NavLink} from "react-router-dom";
+
 export const HomePage = () => {
+  
   return (
     <div className="main">
       <div className="image">

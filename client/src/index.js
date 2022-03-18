@@ -4,19 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {BrowserRouter} from "react-router-dom";
-import {createStore} from "redux";
 import {Provider} from "react-redux";
-import {getAllPokemons} from "./reducers/getAllPokemons";
-const store = createStore(getAllPokemons);
-//import {BrowserRouter} from "react-router-dom";
+import store from "./store/store";
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode>
+      <Provider store={store}>
         <App />
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>,
+      </Provider>
+    </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
