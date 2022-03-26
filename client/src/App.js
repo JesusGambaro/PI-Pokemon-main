@@ -5,17 +5,35 @@ import {HomePage} from "./components/HomePage";
 import CreateNew from "./components/CreateNew";
 import PageNotFound from "./components/PageNotFound";
 import IndividualPage from "./components/IndividualPage";
+import {BrowserRouter} from "react-router-dom";
 function App() {
+  const styles = {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    width: "100%",
+  };
   return (
-    <div>
-      <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route path="/home/:id" element={[<Navbar />, <IndividualPage />]} />
-        <Route path="/home" element={[<Navbar />, <Pokemons />]} />
-        <Route path="/create" element={[<Navbar />, <CreateNew />]} />
-        <Route path="*" exact={true} element={<PageNotFound />} />
-      </Routes>
-    </div>
+    <BrowserRouter>
+      <div style={styles}>
+        <Routes>
+          <Route exact path="/" element={<HomePage />} />
+          <Route
+            path="/home/:id"
+            element={[<Navbar key={"nav"} />, <IndividualPage key={"i"} />]}
+          />
+          <Route
+            path="/home"
+            element={[<Navbar key={"nav"} />, <Pokemons key={"all"} />]}
+          />
+          <Route
+            path="/create"
+            element={[<Navbar key={"nav"} />, <CreateNew key={"create"} />]}
+          />
+          <Route path="*" exact={true} element={<PageNotFound />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

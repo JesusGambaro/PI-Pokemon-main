@@ -28,9 +28,9 @@ conn.sync({force: true}).then(() => {
     if (!petition.length) {
       const {data} = await axios.get("https://pokeapi.co/api/v2/type");
       const allTypes = data.results.map((type) => type.name);
-      allTypes.forEach(async (type_name) => {
+      for (const type_name of allTypes) {
         await Types.create({type_name});
-      });
+      }
     }
   })();
   server.listen(3001, () => {

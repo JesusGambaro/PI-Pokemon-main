@@ -8,7 +8,7 @@ const Loading = () => {
   };
   return (
     <div className="loading-container" style={styles}>
-      <img src="./PosibleImages/loading.gif" alt="loading" />
+      <img src="/PosibleImages/loading.gif" alt="loading" />
     </div>
   );
 };
