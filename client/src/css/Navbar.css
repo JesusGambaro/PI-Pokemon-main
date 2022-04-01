@@ -1,0 +1,40 @@
+.navbar {
+  background: #e63946;
+  box-shadow: 10px 0 25px rgba(0, 0, 0, 0.2);
+  color: black;
+  height: 4rem;
+  width: 100%;
+  position: fixed;
+  inset: 0;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+.navbar img {
+  width: 4rem;
+  transition: transform 0.5s ease;
+}
+.navbar img:hover {
+  transform: rotate(180deg);
+}
+.navbar h1 {
+  position: relative;
+}
+.navbar h1::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-in-out;
+}
+.navbar h1:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

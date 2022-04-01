@@ -1,0 +1,86 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  flex: 1 0 16rem;
+  height: 20rem;
+  max-width: 16rem;
+  background: #facf5a;
+  border-radius: 1rem;
+  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0px);
+  padding: 1rem;
+  gap: 0.5rem;
+  position: relative;
+}
+.pokeId {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 1rem 0;
+  padding: 0.5rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+  /*   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.5); */
+}
+.card-container span {
+  display: flex;
+  width: 100%;
+  height: 20%;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+.card-container span button {
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 15%;
+  height: 50%;
+}
+.card-container span button:hover {
+  transform: scale(1.02);
+}
+.card-container .types {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 50%;
+  align-items: center;
+}
+.card-container .types p {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-weight: 600;
+  /*   border: 1px solid rgba(255, 255, 255, 0.5); */
+}
+.card-container span button {
+  padding: 0.2rem;
+}
+.card-container.one-type {
+  background: var(--card-color);
+}
+
+.card-container.two-types {
+  background: linear-gradient(
+    45deg,
+    var(--card-color) 30%,
+    var(--card-color2) 70%
+  );
+}
+
+.card-container img {
+  width: 70%;
+  max-width: 195px;
+  transition: transform ease 0.5s;
+}
+
+.card-container img:hover {
+  transform: scale(1.05);
+}
