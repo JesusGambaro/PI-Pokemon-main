@@ -1,16 +1,14 @@
+import "../css/Loading.css"
+
 const Loading = () => {
-  const styles = {
-    display: "flex",
-    with: "100%",
-    height: "100vh",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-  return (
-    <div className="loading-container" style={styles}>
-      <img src="/PosibleImages/loading.gif" alt="loading" />
-    </div>
-  );
+    return (
+        <div className="loading-container">
+            <div className="loader">
+                <img src="/Images/loading.png" alt="loading"/>
+                <div className="shadow"></div>
+            </div>
+        </div>
+    );
 };
 
 export default Loading;

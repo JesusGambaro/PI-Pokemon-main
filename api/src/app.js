@@ -31,9 +31,10 @@ server.use("/", routes);
 // Error catching endware.
 server.use((err, req, res, next) => {
     // eslint-disable-line no-unused-vars
+   console.log(err)
     const status = err.status || 500;
     const message = err.message || err;
-    console.log(err);
+    //console.log(err);
     res.status(status).send(message);
 });
 

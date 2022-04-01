@@ -7,17 +7,16 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
   const {data, loading} = state;
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Math.ceil(data.length / cardsPerPage);
-  const nextPage = () => {
-    setCurrentPage((currentPage) => currentPage + 1);
-  };
 
-  const prevPage = () => {
-    setCurrentPage((currentPage) => currentPage - 1);
-  };
+  const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
 
-  const goPage = (e) => {
-    setCurrentPage(Number(e.target.textContent));
-  };
+  const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
+
+  const goPage = (e) => setCurrentPage(Number(e.target.textContent));
+
+  useEffect(() => {
+    if (data.length < 40) setCurrentPage(1);
+  }, [data]);
 
   const dataPerPage = () => {
     const start = currentPage * cardsPerPage - cardsPerPage,
@@ -32,12 +31,14 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
       return limit <= pages && limit;
     });
   };
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [currentPage]);
+
   return (
     <>
       <FilterSearchBar />
@@ -61,7 +62,11 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
       {data.length > 1 && (
         <div className="pagination-container">
           <div className="selection">
-            <button className="btn prev" onClick={prevPage} disabled={currentPage === 1}>
+            <button
+              className="btn prev"
+              onClick={prevPage}
+              disabled={currentPage === 1}
+            >
               &#8249;
             </button>
 
@@ -69,7 +74,7 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
               return (
                 e && (
                   <button
-                    className={(currentPage === i + 1 ? "btn active" : "btn")}
+                    className={currentPage === i + 1 ? "btn active" : "btn"}
                     key={i}
                     onClick={goPage}
                   >
@@ -79,7 +84,11 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
               );
             })}
 
-            <button className="btn next" onClick={nextPage} disabled={currentPage === pages}>
+            <button
+              className="btn next"
+              onClick={nextPage}
+              disabled={currentPage === pages}
+            >
               &#8250;
             </button>
           </div>
@@ -89,5 +98,4 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
     </>
   );
 };
-
 export default Pagination;
