@@ -1,8 +1,8 @@
-const {Types} = require("../db");
+const {Type} = require("../db");
 
 const getAllTypes = async (req, res, next) => {
   try {
-    const dbTypes = await Types.findAll({});
+    const dbTypes = await Type.findAll({});
     const upper = dbTypes.map(({dataValues}) => {
       return {
         ...dataValues,

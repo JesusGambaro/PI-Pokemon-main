@@ -6,14 +6,14 @@ import {useEffect} from "react";
 import Pagination from "./Pagination";
 
 const Pokemons = () => {
-    const pokemons = useSelector((state) => state.pokemons);
-    const dispatch = useDispatch();
+  const pokemons = useSelector((state) => state.pokemons);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!pokemons.data.length) dispatch(initPokemons());
-    }, []);
-
-    return <Pagination state={pokemons} pageLimit={4} cardsPerPage={12}/>;
+  useEffect(() => {
+    if (!pokemons.data.length) dispatch(initPokemons());
+  }, []);
+  
+  return <Pagination state={pokemons} pageLimit={4} cardsPerPage={12} />;
 };
 
 export default Pokemons;

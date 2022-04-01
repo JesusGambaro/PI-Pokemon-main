@@ -9,7 +9,7 @@ export const initPokemons = () => {
             dispatch({type: "@pokemons/init", payload: data});
             dispatch({type: "@backup/init", payload: data});
         } catch (e) {
-            dispatch({type: "@pokemons/init", payload: [{message: "Can´t get pokemons"}]});
+            dispatch({type: "@pokemons/init", payload: [{message: "Can't get pokemons"}]});
         }
         dispatch({type: "@pokemons/loading", payload: false});
     };

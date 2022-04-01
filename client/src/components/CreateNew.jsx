@@ -57,8 +57,8 @@ const CreateNew = () => {
                             "";
             default:
                 if (!/^[0-9]+$/.test(param)) {
-                    return "Must be just numbers";
-                } else if (param > 150) return "Not exceeds 150";
+                    return "Must be just digits";
+                } else if (param > 150) return "Can't exceeds 150";
         }
         return "";
     }

@@ -1,5 +1,5 @@
 const {default: axios} = require("axios");
-const {Pokemon, Types} = require("../db");
+const {Pokemon, Type} = require("../db");
 //const DEFAULT_IMAGE ="https://c.tenor.com/FoeHB1WMoVUAAAAd/whos-that-pokemon-charmander.gif"; < = optional, default image
 
 const getAllPokemons = async (req, res, next) => {
@@ -9,7 +9,7 @@ const getAllPokemons = async (req, res, next) => {
     if (name) {
       const dataFromDb = await dbPokemons();
       const founded = dataFromDb.find(
-        (e) => e.name.toLowerCase() === name.toLowerCase()
+        (p) => p.name.toLowerCase() === name.toLowerCase()
       );
       if (founded) {
         return res.send({
@@ -59,6 +59,7 @@ const mergePokemons = async () => {
     return [...pokemonsApi, ...pokemonsDb];
   } catch (e) {
     console.error(e);
+    return e;
   }
 };
 const apiPokemons = async () => {
@@ -91,7 +92,7 @@ const apiPokemons = async () => {
 };
 const dbPokemons = async () => {
   const dbData = await Pokemon.findAll({
-    include: [{model: Types, attributes: ["type_name"]}],
+    include: [{model: Type, attributes: ["type_name"]}],
   });
 
   return dbData.map(({dataValues}) => {
@@ -116,7 +117,7 @@ const getOnePokemonById = async (req, res, next) => {
     const {id} = req.params;
 
     if (id.toString().includes("-")) {
-      const pokemonFounded = await Pokemon.findByPk(id, {include: Types});
+      const pokemonFounded = await Pokemon.findByPk(id, {include: Type});
       if (pokemonFounded) {
         return res.send({
           id: pokemonFounded.id,
@@ -190,7 +191,7 @@ const addPokemon = async (req, res, next) => {
       weight,
       sprites: sprites, //|| DEFAULT_IMAGE,< = optional, if "sprites" is empty add a default image
     });
-    const matchTypes = await Types.findAll({where: {type_name: typesInLower}});
+    const matchTypes = await Type.findAll({where: {type_name: typesInLower}});
     const linkedTypes = await newPokemon.addTypes(matchTypes);
 
     res.send(linkedTypes);
@@ -206,8 +207,8 @@ const delPokemon = async (req, res, next) => {
     if (!id.toString().includes("-"))
       throw new {message: "Id must be a database id type", status: 206}(); //Innecesario
 
-    const pokemonDel = await Pokemon.destroy({where: {id}, include: Types});
-    
+    const pokemonDel = await Pokemon.destroy({where: {id}, include: Type});
+
     if (!pokemonDel) throw {message: "Pokemon not found", status: 404};
     res.send({message: "Pokemon deleted succesfully"});
   } catch (error) {
@@ -226,7 +227,7 @@ const delPokemon = async (req, res, next) => {
       {name, hp, attack, defense, speed, height, weight, types, sprites},
       {where: {id}}
     );
-    const matchTypes = await Types.findAll({where: {type_name: types}});
+    const matchTypes = await Type.findAll({where: {type_name: types}});
     const petition = await newPokemon.addTypes(matchTypes);
     res.send(petition);
   } catch (error) {

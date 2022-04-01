@@ -12,7 +12,7 @@ export const Types = (props) => {
                 const {data} = await axios.get(`${MAIN_URL}/types`);
                 setTypes(() => data);
             } catch (e) {
-                setTypes(() => [{type_name: "Can´t get types"}]);
+                setTypes(() => [{type_name: "Can't get types"}]);
             }
         })();
     }, []);

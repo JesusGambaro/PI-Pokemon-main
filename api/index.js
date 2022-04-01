@@ -19,22 +19,21 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require("./src/app.js");
 const {conn} = require("./src/db.js");
-const {Types} = require("./src/db");
-const { default: axios } = require("axios");
+const {Type} = require("./src/db");
+const {default: axios} = require("axios");
 // Syncing all the models at once.
 conn.sync({force: true}).then(() => {
-  
   (async () => {
-    const petition = await Types.findAll({});
+    const petition = await Type.findAll({});
     if (!petition.length) {
       const {data} = await axios.get("https://pokeapi.co/api/v2/type");
       const allTypes = data.results.map((type) => type.name);
       for (const type_name of allTypes) {
-        await Types.create({type_name});
+        await Type.create({type_name});
       }
     }
   })();
-  
+
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });

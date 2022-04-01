@@ -51,7 +51,7 @@ const Pagination = ({state, pageLimit, cardsPerPage}) => {
               pokemon.hasOwnProperty("message") ? (
                 <h1 key={i}>{pokemon.message}</h1>
               ) : (
-                <PokemonCard key={i} props={pokemon} change={currentPage} />
+                <PokemonCard key={i} props={pokemon} />
               )
             )
           ) : (
